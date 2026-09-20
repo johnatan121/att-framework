@@ -1,0 +1,9 @@
+body{
+    background-color: lightblue;
+}
+/* muda a cor quando o tamanho da leta for menor que 600px*/
+@media(max-windth: 600px){
+    body{
+        background-color: lightgray;
+    }
+}
