@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vue.js</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+    <div id ="app">        
+        <button @click="mostrar =!mostrar">mostrar / ocultar</button>
+        <p v-if="mostrar">bem vindo a disciplina de frameworks!</p>
+    </div>
+    <script>
+        const {createApp} = Vue
+        createApp({
+            data(){
+                return{
+                    mostrar:true
+                }
+            }
+        }).mount("#app")
+    </script>
+    
+</body>
+</html>

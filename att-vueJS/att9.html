@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vue.js</title>
+       <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+    <div id ="app">
+        <input v-model="novaTecnologia" placeholder="digite uma tecnologia">
+        <button @click="adicionar">adicionar</button>
+        <ul>
+            <li v-for="tec in tecnologias">{{tec}}</li>
+        </ul>
+    </div>
+    <script>
+        const{ createApp} = Vue
+        createApp({
+            data(){
+                return{
+                    novaTecnologia:'',
+                    tecnologias: [ 'vue','react','angular','bootstrap']
+                }
+            },
+            methods:{
+                adicionar(){
+                    if (this.novaTecnologia.trim()!==''){
+                    this.tecnologias.push(this.novaTecnologia)
+                    this.novaTecnologia =''
+                }
+            } 
+        }           
+        }).mount('#app')
+    </script>
+</body>
+</html>

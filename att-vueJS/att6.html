@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vue.js</title>
+     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+    <div id="app">
+        <input v-model="idade"type="number" placeholder="digite sua idade">
+        <p v-if="idade>=18">maior de idade</p>
+        <p v-else>menor de idade</p>
+    </div>
+    <script>
+        const{ createApp } = Vue 
+        createApp({
+            data(){
+                return{
+                    idade:""
+                }
+            }
+        }).mount('#app')
+    </script>
+</body>
+</html>
