@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciador de Tarefas</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        QUEM EU SOU body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+
+        .form-grupo {
+            margin-bottom: 15px;
+        }
+
+        .form-grupo label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-grupo input,
+        .form-grupo select {
+            width: 300px;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .btn-excluir {
+            background-color: #dc3545;
+            padding: 5px 10px;
+            font-size: 14px;
+            margin-left: 10px;
+        }
+
+        .btn-excluir:hover {
+            background-color: #c82333;
+        }
+
+        .lista-tarefas {
+            margin-top: 30px;
+        }
+
+        .tarefa-item {
+            background: white;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            border-left: 5px solid #007bff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .status-mensagem {
+            margin-top: 20px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .container-tarefas {
+            padding: 0;
+            list-style: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="app">
+        <h2>Gerenciador de Tarefas</h2>
+        <div class="form-grupo">
+            <label for="nome">Nome da Tarefa:</label>
+            <input type="text" id="nome" v-model="novaTarefa.nome">
+        </div>
+
+        <div class="form-grupo">
+            <label for="responsavel">Responsável:</label>
+            <input type="text" id="responsavel" v-model="novaTarefa.responsavel">
+        </div>
+
+        <div class="form-grupo">
+            <label for="prioridade">Prioridade:</label>
+            <select id="prioridade" v-model="novaTarefa.prioridade">
+                <option value="Baixa">Baixa</option>
+                <option value="Média">Média</option>
+                <option value="Alta">Alta</option>
+            </select>
+        </div>
+
+        <button @click="adicionarTarefa">Adicionar Tarefa</button>
+
+        <p class="status-mensagem">
+            <span v-if="tarefas.length === 0">Você ainda não possui tarefas.</span>
+            <span v-else-if="tarefas.length >= 1 && tarefas.length <= 3">Você possui poucas tarefas.</span>
+            <span v-else>Você possui várias tarefas pendentes.</span>
+        </p>
+
+        <div class="lista-tarefas">
+            <h3>Lista de Tarefas</h3>
+
+            <p v-if="tarefas.length === 0">Nenhuma tarefa cadastrada.</p>
+
+            <ul class="container-tarefas">
+                <li v-for="(tarefa, index) in tarefas" :key="index" class="tarefa-item">
+                    <div>
+                        <strong>{{ tarefa.nome }}</strong> <br>
+                        <small>Responsável: {{ tarefa.responsavel }} | Prioridade: {{ tarefa.prioridade }}</small>
+                    </div>
+                    <button class="btn-excluir" @click="excluirTarefa(index)">Excluir</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        const { createApp } = Vue;
+
+        createApp({
+            data() {
+                return {
+                    tarefas: [],
+                    novaTarefa: {
+                        nome: '',
+                        responsavel: '',
+                        prioridade: 'Baixa'
+                    }
+                }
+            },
+            methods: {
+                adicionarTarefa() {
+                    if (this.novaTarefa.nome.trim() === '' || this.novaTarefa.responsavel.trim() === '') {
+                        alert('preencha o nome da tarefa e o responsável.');
+                        return;
+                    }
+                    this.tarefas.push({ ...this.novaTarefa });
+                    this.novaTarefa.nome = '';
+                    this.novaTarefa.responsavel = '';
+                    this.novaTarefa.prioridade = 'Baixa';
+                },
+                excluirTarefa(index) {
+                    this.tarefas.splice(index, 1);
+                }
+            }
+        }).mount('#app');
+    </script>
+
+</body>
+
+</html>
